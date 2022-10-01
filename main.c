@@ -8,22 +8,31 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
+#include "console.h"
 
 const uint LED_PIN = 25;
 
+uint32_t timerFlag = 0;
+
+bool timerCallback(repeating_timer_t *rt){
+    timerFlag = 1;
+}
+
 int main() {
-    bi_decl(bi_program_description("PROJECT DESCRIPTION"));
-    
+    repeating_timer_t timer;
+
     stdio_init_all();
+    ConsoleInit();
+    add_repeating_timer_ms(20, timerCallback, NULL, &timer);
 
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
     while(1) {
-        gpio_put(LED_PIN, 0);
-        sleep_ms(250);
-        gpio_put(LED_PIN, 1);
-        puts("Hello World\n");
-        sleep_ms(1000);
+        if( timerFlag == 1 ){
+            ConsoleProcess();
+            timerFlag = 0;
+        }
+        sleep_ms(1);
     }
 }
