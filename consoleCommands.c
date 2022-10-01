@@ -19,6 +19,9 @@ static eCommandResult_T ConsoleCommandVer(const char buffer[]);
 static eCommandResult_T ConsoleCommandHelp(const char buffer[]);
 static eCommandResult_T ConsoleCommandParamExampleInt16(const char buffer[]);
 static eCommandResult_T ConsoleCommandParamExampleHexUint16(const char buffer[]);
+static eCommandResult_T ConsoleCommandUsers(const char buffer[]);
+static eCommandResult_T ConsoleCommandRelay(const char buffer[]);
+static eCommandResult_T ConsoleCommandAccel(const char buffer[]);
 
 static const sConsoleCommandTable_T mConsoleCommandTable[] =
 {
@@ -27,6 +30,9 @@ static const sConsoleCommandTable_T mConsoleCommandTable[] =
     {"ver", &ConsoleCommandVer, HELP("Get the version string")},
     {"int", &ConsoleCommandParamExampleInt16, HELP("How to get a signed int16 from params list: int -321")},
     {"u16h", &ConsoleCommandParamExampleHexUint16, HELP("How to get a hex u16 from the params list: u16h aB12")},
+	{"users", &ConsoleCommandUsers, HELP("Show current list of authorized users and admins")},
+	{"relay", &ConsoleCommandRelay, HELP("Show the current status of the output relay")},
+	{"accelTimer", &ConsoleCommandAccel, HELP("Show current value of the inactivity timer")},
 
 	CONSOLE_COMMAND_TABLE_END // must be LAST
 };
@@ -100,6 +106,23 @@ static eCommandResult_T ConsoleCommandVer(const char buffer[])
 	return result;
 }
 
+static eCommandResult_T ConsoleCommandUsers(const char buffer[])
+{
+	ConsoleIoSendString("Authorized Users:");
+	//show some authorized users here
+}
+
+static eCommandResult_T ConsoleCommandRelay(const char buffer[])
+{
+	ConsoleIoSendString("Relay status:");
+	//Show relay status here
+}
+
+static eCommandResult_T ConsoleCommandAccel(const char buffer[])
+{
+	ConsoleIoSendString("Accel Timer:");
+	//Show relay status here
+}
 
 const sConsoleCommandTable_T* ConsoleCommandsGetTable(void)
 {
